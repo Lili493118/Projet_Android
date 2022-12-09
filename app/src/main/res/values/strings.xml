@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Projet_AOUSTIN</string>
+    <string name="fragment_recherche">fragment_recherche</string>
+    <string name="fragment_favoris">fragment_favoris</string>
+    <string name="fragment_preference">fragment_preference</string>
 </resources>
