@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Fonction qui indique selon le bouton choisit dans la toolbar l'action à faire
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //Fonction qui creer les options sur la toolbar
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_content,menu);
         return true;
