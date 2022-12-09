@@ -14,4 +14,34 @@
         android:text="Fragment recherche"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchbar"
+            android:layout_width="282dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textinputbar"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:hint="Mots-clés" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/searchbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotationY="0"
+            android:text="Button" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
