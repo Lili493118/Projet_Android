@@ -51,8 +51,14 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="241dp"
+            android:layout_height="88dp"
             app:srcCompat="@drawable/ic_launcher_background" />
+
+        <ListView
+            android:id="@+id/listViewimage"
+            android:layout_width="match_parent"
+            android:layout_height="218dp"
+            tools:ignore="MissingConstraints" />
 
     </LinearLayout>
 
