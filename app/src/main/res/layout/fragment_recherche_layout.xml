@@ -9,50 +9,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchbar"
+            android:layout_width="411dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="3dp"
-            android:text="Fragment recherche" />
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="1dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/searchbar"
-                android:layout_width="282dp"
-                android:layout_height="54dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="1dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textinputbar"
-                    android:layout_width="282dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Mots-clés" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textinputbar"
+                android:layout_width="405dp"
+                android:layout_height="59dp"
+                android:hint="Mots-clés" />
 
             <Button
                 android:id="@+id/searchbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rotationY="0"
-                android:text="Button" />
-
-        </LinearLayout>
+                android:text="Rechercher" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ListView
             android:id="@+id/listViewimage"
             android:layout_width="match_parent"
             android:layout_height="605dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints" >
+
+        </ListView>
 
     </LinearLayout>
 

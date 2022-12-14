@@ -19,12 +19,11 @@
 
     <LinearLayout
         android:id="@+id/fragment_container"
-        android:layout_width="372dp"
-        android:layout_height="670dp"
+        android:layout_width="415dp"
+        android:layout_height="676dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        tools:ignore="MissingConstraints"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
