@@ -15,10 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Recherche extends Fragment {
@@ -64,10 +66,11 @@ public class Fragment_Recherche extends Fragment {
             service_image.setMonListener(new Listener_Service_Image() {
 
                 @Override
-                public void update(List<Bitmap> bitmapList) {
+                public void update(ArrayList<Bitmap> bitmapList) {
                     Log.d(TAG, bitmapList.toString());
-                    ImageView imageView = rootView.findViewById(R.id.imageView);
-                    imageView.post(()->imageView.setImageBitmap(bitmapList.get(0)) );
+                    ListView listView = rootView.findViewById(R.id.listViewimage);
+                    AdaptateurListImage adaptateurListImage = new AdaptateurListImage(listView.getContext(),bitmapList);
+                    listView.post(()-> listView.setAdapter(adaptateurListImage));
                 }
             });
         }

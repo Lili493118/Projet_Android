@@ -74,7 +74,7 @@ public class Service_Image extends Service {
                         String jsonStr = builder.toString();
                         JSONObject jsonObject = new JSONObject(jsonStr);
                         JSONArray jsonArray = jsonObject.getJSONArray("items");
-                        List<Bitmap> bitmapList = new ArrayList<>();
+                        ArrayList<Bitmap> bitmapList = new ArrayList<>();
 
                         for (int i=0; i<jsonObject.getJSONArray("items").length(); i++){
                             Log.d("reponse",jsonArray.getJSONObject(i).getJSONObject("media").get("m").toString());

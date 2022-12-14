@@ -2,8 +2,9 @@ package com.example.projet_aoustin;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Listener_Service_Image {
-    public void update(List<Bitmap> bitmapList);
+    public void update(ArrayList<Bitmap> bitmapList);
 }

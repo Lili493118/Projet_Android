@@ -21,7 +21,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="336dp"
+            android:layout_height="104dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -48,16 +48,10 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
         <ListView
             android:id="@+id/listViewimage"
             android:layout_width="match_parent"
-            android:layout_height="218dp"
+            android:layout_height="605dp"
             tools:ignore="MissingConstraints" />
 
     </LinearLayout>
