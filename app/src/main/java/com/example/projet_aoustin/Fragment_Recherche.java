@@ -35,9 +35,7 @@ public class Fragment_Recherche extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_recherche_layout, container, false);
         Log.d("Fragment Recherche","onCreateView");
         //Log.d("Fragment Recherche",getActivity().toString());
-        Intent intent = new Intent(getActivity(), Service_Image.class);
-        getActivity().bindService(intent, connection, BIND_AUTO_CREATE);
-        getActivity().startService(intent);
+
 
 
         Button searchbutton = rootView.findViewById(R.id.searchbutton);
@@ -47,6 +45,10 @@ public class Fragment_Recherche extends Fragment {
                 EditText InputSearchText = rootView.findViewById(R.id.textinputbar);
                 String editTextValue = InputSearchText.getText().toString();
                 Log.d("RECHERCHE",editTextValue);
+                Intent intent = new Intent(getActivity(), Service_Image.class);
+                intent.putExtra("recherche",editTextValue);
+                getActivity().bindService(intent, connection, BIND_AUTO_CREATE);
+                getActivity().startService(intent);
             }
         });
         return rootView;

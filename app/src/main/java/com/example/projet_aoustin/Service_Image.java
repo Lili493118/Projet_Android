@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -56,13 +57,16 @@ public class Service_Image extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG,"onStartCommand");
         this.test="fin";
+        Bundle getExtra = intent.getExtras();
+        String keyword = new String(getExtra.getString("recherche"));
 
         new Thread(new Runnable() {
             public void run() {
 
+
                 URL url = null;
                 try {
-                    url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=cats&format=json");
+                    url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags="+keyword+"&format=json");
                     StringBuilder builder = new StringBuilder();
 
                     try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream(), UTF_8))) {
