@@ -62,6 +62,7 @@ public class Service_Image extends Service {
 
         new Thread(new Runnable() {
             public void run() {
+                int progress=0;
 
                 URL url = null;
                 try {
@@ -83,6 +84,7 @@ public class Service_Image extends Service {
                         for (int i=0; i<jsonObject.getJSONArray("items").length(); i++){
                             Log.d("reponse",jsonArray.getJSONObject(i).get("title").toString());
                             Bitmap bitmap = null;
+                            listener_service_image.progress(progress++);
                             try {
                                 bitmap = BitmapFactory.decodeStream((InputStream)new URL(
                                         jsonArray.getJSONObject(i).getJSONObject("media").get("m").toString()).getContent());
@@ -109,18 +111,6 @@ public class Service_Image extends Service {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-
-
-
-
-                Bitmap bitmap = null;
-                try {
-                    bitmap = BitmapFactory.decodeStream((InputStream)new URL(
-                            "https://cdn.futura-sciences.com/sources/grenouille_arboricole_premiere_fluorescente.jpg").getContent());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //listener_service_image.update(bitmap);
             }
         }).start();
 

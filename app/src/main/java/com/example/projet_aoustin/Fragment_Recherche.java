@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -82,6 +83,12 @@ public class Fragment_Recherche extends Fragment {
                                     .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).commit();
                         }
                     });
+                }
+
+                @Override
+                public void progress(int progress) {
+                    ProgressBar progressBar = rootView.findViewById(R.id.progressBar);
+                    progressBar.setProgress(progress);
                 }
             });
         }

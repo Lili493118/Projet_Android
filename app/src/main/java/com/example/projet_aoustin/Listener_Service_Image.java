@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface Listener_Service_Image {
     public void update(ArrayList<Image> ImageList);
+    public void progress(int progress);
 }
