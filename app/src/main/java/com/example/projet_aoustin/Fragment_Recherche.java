@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -73,6 +74,13 @@ public class Fragment_Recherche extends Fragment {
                     ListView listView = rootView.findViewById(R.id.listViewimage);
                     AdaptateurListImage adaptateurListImage = new AdaptateurListImage(listView.getContext(),ImageList);
                     listView.post(()-> listView.setAdapter(adaptateurListImage));
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Image selectedItem = (Image) parent.getItemAtPosition(position);
+                            Log.d("ONCLICK",selectedItem.toString());
+                        }
+                    });
                 }
             });
         }
