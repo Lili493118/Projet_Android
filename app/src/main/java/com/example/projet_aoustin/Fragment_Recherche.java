@@ -38,7 +38,6 @@ public class Fragment_Recherche extends Fragment {
         //Log.d("Fragment Recherche",getActivity().toString());
 
 
-
         Button searchbutton = rootView.findViewById(R.id.searchbutton);
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +78,8 @@ public class Fragment_Recherche extends Fragment {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Image selectedItem = (Image) parent.getItemAtPosition(position);
                             Log.d("ONCLICK",selectedItem.toString());
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).commit();
                         }
                     });
                 }
