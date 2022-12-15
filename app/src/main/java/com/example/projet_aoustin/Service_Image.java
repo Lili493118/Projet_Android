@@ -90,6 +90,8 @@ public class Service_Image extends Service {
                                 ImageList.add(new Image.Builder()
                                         .bitmap(bitmap)
                                         .titre(jsonArray.getJSONObject(i).get("title").toString())
+                                        .date(jsonArray.getJSONObject(i).get("date_taken").toString())
+                                        .auteur(jsonArray.getJSONObject(i).get("author").toString())
                                         .build()
                                 );
                             } catch (IOException e) {
