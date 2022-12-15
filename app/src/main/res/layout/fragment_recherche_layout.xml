@@ -27,7 +27,11 @@
                 android:id="@+id/textinputbar"
                 android:layout_width="405dp"
                 android:layout_height="59dp"
-                android:hint="Mots-clés" />
+                android:hint="Mots-clés"
+                android:imeOptions="actionSend"
+                android:maxLines="1"
+                android:inputType="text"/>
+
 
             <Button
                 android:id="@+id/searchbutton"

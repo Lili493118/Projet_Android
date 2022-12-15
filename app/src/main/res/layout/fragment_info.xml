@@ -46,6 +46,12 @@
             android:layout_height="wrap_content"
             android:text="Add to favorite" />
 
+        <Button
+            android:id="@+id/retour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retour" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,9 +9,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +37,7 @@ public class Fragment_Recherche extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_recherche_layout, container, false);
         Log.d("Fragment Recherche","onCreateView");
         //Log.d("Fragment Recherche",getActivity().toString());
@@ -43,15 +47,23 @@ public class Fragment_Recherche extends Fragment {
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText InputSearchText = rootView.findViewById(R.id.textinputbar);
-                String editTextValue = InputSearchText.getText().toString();
-                Log.d("RECHERCHE",editTextValue);
-                Intent intent = new Intent(getActivity(), Service_Image.class);
-                intent.putExtra("recherche",editTextValue);
-                getActivity().bindService(intent, connection, BIND_AUTO_CREATE);
-                getActivity().startService(intent);
+                SearchAction();
             }
         });
+
+        EditText edittext = (EditText) rootView.findViewById(R.id.textinputbar);
+        edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    SearchAction();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
         return rootView;
     }
 
@@ -97,6 +109,16 @@ public class Fragment_Recherche extends Fragment {
         public void onServiceDisconnected(ComponentName arg0) {
         }
     };
+
+    private void SearchAction(){
+        EditText InputSearchText = rootView.findViewById(R.id.textinputbar);
+        String editTextValue = InputSearchText.getText().toString();
+        Log.d("RECHERCHE",editTextValue);
+        Intent intent = new Intent(getActivity(), Service_Image.class);
+        intent.putExtra("recherche",editTextValue);
+        getActivity().bindService(intent, connection, BIND_AUTO_CREATE);
+        getActivity().startService(intent);
+    }
 
 
 }
