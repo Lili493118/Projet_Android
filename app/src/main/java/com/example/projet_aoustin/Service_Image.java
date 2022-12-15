@@ -63,7 +63,6 @@ public class Service_Image extends Service {
         new Thread(new Runnable() {
             public void run() {
 
-
                 URL url = null;
                 try {
                     url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags="+keyword+"&format=json");
@@ -78,20 +77,26 @@ public class Service_Image extends Service {
                         String jsonStr = builder.toString();
                         JSONObject jsonObject = new JSONObject(jsonStr);
                         JSONArray jsonArray = jsonObject.getJSONArray("items");
-                        ArrayList<Bitmap> bitmapList = new ArrayList<>();
+                        //Image image = new Image.Builder().auteur("test").build();
+                        ArrayList<Image> ImageList = new ArrayList<>();
 
                         for (int i=0; i<jsonObject.getJSONArray("items").length(); i++){
-                            Log.d("reponse",jsonArray.getJSONObject(i).getJSONObject("media").get("m").toString());
+                            Log.d("reponse",jsonArray.getJSONObject(i).get("title").toString());
                             Bitmap bitmap = null;
                             try {
                                 bitmap = BitmapFactory.decodeStream((InputStream)new URL(
                                         jsonArray.getJSONObject(i).getJSONObject("media").get("m").toString()).getContent());
-                                bitmapList.add(bitmap);
+
+                                ImageList.add(new Image.Builder()
+                                        .bitmap(bitmap)
+                                        .titre(jsonArray.getJSONObject(i).get("title").toString())
+                                        .build()
+                                );
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-                        listener_service_image.update(bitmapList);
+                        listener_service_image.update(ImageList);
 
                     } catch (IOException e) {
                         e.printStackTrace();

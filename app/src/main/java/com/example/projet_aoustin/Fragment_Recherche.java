@@ -68,10 +68,10 @@ public class Fragment_Recherche extends Fragment {
             service_image.setMonListener(new Listener_Service_Image() {
 
                 @Override
-                public void update(ArrayList<Bitmap> bitmapList) {
-                    Log.d(TAG, bitmapList.toString());
+                public void update(ArrayList<Image> ImageList) {
+                    Log.d(TAG, ImageList.toString());
                     ListView listView = rootView.findViewById(R.id.listViewimage);
-                    AdaptateurListImage adaptateurListImage = new AdaptateurListImage(listView.getContext(),bitmapList);
+                    AdaptateurListImage adaptateurListImage = new AdaptateurListImage(listView.getContext(),ImageList);
                     listView.post(()-> listView.setAdapter(adaptateurListImage));
                 }
             });

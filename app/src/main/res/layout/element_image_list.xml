@@ -13,4 +13,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/titleimage"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewElement"
+        tools:layout_editor_absoluteX="176dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
