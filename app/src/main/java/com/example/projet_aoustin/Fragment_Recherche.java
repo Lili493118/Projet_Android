@@ -91,6 +91,8 @@ public class Fragment_Recherche extends Fragment {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Image selectedItem = (Image) parent.getItemAtPosition(position);
                             Log.d("ONCLICK",selectedItem.toString());
+                            MyDatabase myDatabased = new MyDatabase(getContext());
+
                             getParentFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).commit();
                         }

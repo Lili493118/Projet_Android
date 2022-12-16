@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,7 +52,13 @@ public class Fragment_Info extends Fragment {
         addFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ajout du lien de l'image dans la base de données
+                MyDatabase myDatabase = new MyDatabase(getContext());
+                myDatabase.insertData(image);
+                Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
+
+                for (Image i : myDatabase.readData()){
+                    Log.d("DB",i.toString());
+                }
             }
         });
         return rootView;
