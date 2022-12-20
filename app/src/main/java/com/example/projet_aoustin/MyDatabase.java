@@ -71,8 +71,8 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<Image> readData(){
-        List<Image> imageList = new ArrayList<>();
+    public ArrayList<Image> readData(){
+        ArrayList<Image> imageList = new ArrayList<>();
         String select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME);
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(select,null);
