@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,19 +50,23 @@ public class Fragment_Info extends Fragment {
         TextView date = rootView.findViewById(R.id.date);
         date.setText(image.getDate());
 
-        Button addFavorite = rootView.findViewById(R.id.favorite);
-        addFavorite.setOnClickListener(new View.OnClickListener() {
+        Switch addFavorite = (Switch) rootView.findViewById(R.id.favorite);
+        addFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 MyDatabase myDatabase = new MyDatabase(getContext());
-                myDatabase.insertData(image);
-                Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
-
-                for (Image i : myDatabase.readData()){
-                    Log.d("DB",i.toString());
+                if( isChecked){
+                    myDatabase.insertData(image);
+                    Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    //suppression de l'image
+                    myDatabase.deleteData(image);
+                    Toast.makeText(getContext(), "removed from favorite", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         return rootView;
     }
 }

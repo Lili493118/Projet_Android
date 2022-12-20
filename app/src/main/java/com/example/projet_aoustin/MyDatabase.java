@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -66,6 +67,14 @@ public class MyDatabase extends SQLiteOpenHelper {
         values.put(BITMAP,getBytes(image.getBitmap()));
 
         db.insertOrThrow(DATABASE_TABLE_NAME,null,values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    public  void deleteData(Image image){
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        db.delete(DATABASE_TABLE_NAME, TITRE+"=? and "+AUTEUR+"=? and "+DATE+"=?", new String[]{image.getTitre(),image.getAuteur(),image.getDate()});
         db.setTransactionSuccessful();
         db.endTransaction();
     }
