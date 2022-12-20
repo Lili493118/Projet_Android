@@ -35,6 +35,12 @@ public class Fragment_Info extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_info, container, false);
         Log.d("Fragment Info","onCreateView");
 
+        //remplissage du switch
+        Switch addFavorite = (Switch) rootView.findViewById(R.id.favorite);
+        MyDatabase myDatabase = new MyDatabase(getContext());
+        addFavorite.setChecked(myDatabase.isInDatabase(image));
+
+        //Remplissage des champs
         ImageView imageView = rootView.findViewById(R.id.image_info);
         imageView.setImageBitmap(image.getBitmap());
 
@@ -50,11 +56,9 @@ public class Fragment_Info extends Fragment {
         TextView date = rootView.findViewById(R.id.date);
         date.setText(image.getDate());
 
-        Switch addFavorite = (Switch) rootView.findViewById(R.id.favorite);
         addFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MyDatabase myDatabase = new MyDatabase(getContext());
                 if( isChecked){
                     myDatabase.insertData(image);
                     Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();

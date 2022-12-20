@@ -79,6 +79,13 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    public boolean isInDatabase(Image image){
+        String select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME+" WHERE "+TITRE+"=? and "+AUTEUR+"=? and "+DATE+"=?");
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(select,new String[]{image.getTitre(),image.getAuteur(),image.getDate()});
+        return cursor.getCount() >0;
+    }
+
     @SuppressLint("Range")
     public ArrayList<Image> readData(){
         ArrayList<Image> imageList = new ArrayList<>();
