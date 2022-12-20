@@ -35,8 +35,11 @@ public class Fragment_Recherche extends Fragment {
     public View rootView;
     public Fragment_Recherche(){}
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_recherche_layout, container, false);
         Log.d("Fragment Recherche","onCreateView");
 
@@ -119,6 +122,7 @@ public class Fragment_Recherche extends Fragment {
         getActivity().bindService(intent, connection, BIND_AUTO_CREATE);
         getActivity().startService(intent);
     }
+
 
 
 }

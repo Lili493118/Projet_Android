@@ -38,7 +38,7 @@ public class Fragment_Favoris extends Fragment {
                 MyDatabase myDatabased = new MyDatabase(getContext());
 
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).commit();
+                        .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).addToBackStack("favoris").commit();
             }
         });
         return rootView;
