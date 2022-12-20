@@ -71,6 +71,20 @@ public class Fragment_Info extends Fragment {
             }
         });
 
+        Button retour = rootView.findViewById(R.id.retour);
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("close","closing");
+                //getActivity().onBackPressed();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(Fragment_Info.this)
+                        .commit();
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
         return rootView;
     }
 }

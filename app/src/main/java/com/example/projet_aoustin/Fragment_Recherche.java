@@ -37,10 +37,8 @@ public class Fragment_Recherche extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_recherche_layout, container, false);
         Log.d("Fragment Recherche","onCreateView");
-        //Log.d("Fragment Recherche",getActivity().toString());
 
 
         Button searchbutton = rootView.findViewById(R.id.searchbutton);
@@ -94,7 +92,7 @@ public class Fragment_Recherche extends Fragment {
                             MyDatabase myDatabased = new MyDatabase(getContext());
 
                             getParentFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).commit();
+                                    .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).addToBackStack("recherche").commit();
                         }
                     });
                 }
