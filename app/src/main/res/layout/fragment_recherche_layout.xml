@@ -35,6 +35,7 @@
                 android:imeOptions="actionSend"
                 android:inputType="text"
                 android:maxLines="1"
+                android:selectAllOnFocus="true"
                 android:textColor="?attr/colorSecondaryVariant" />
 
 
@@ -52,15 +53,14 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:max="20"
+            android:max="19"
             android:progress="0" />
 
         <ListView
             android:id="@+id/listViewimage"
+            style="@android:style/Widget.ListView"
             android:layout_width="match_parent"
-            android:layout_height="605dp"
-            tools:ignore="MissingConstraints" >
-        </ListView>
+            android:layout_height="match_parent"></ListView>
 
     </LinearLayout>
 

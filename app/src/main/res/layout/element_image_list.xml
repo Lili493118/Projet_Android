@@ -5,20 +5,25 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageViewElement"
-        android:layout_width="415dp"
-        android:layout_height="240dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/titleimage"
-        android:layout_width="58dp"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewElement"
-        tools:layout_editor_absoluteX="176dp" />
+        <ImageView
+            android:id="@+id/imageViewElement"
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/titleimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
