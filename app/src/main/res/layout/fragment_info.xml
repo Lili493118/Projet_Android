@@ -130,7 +130,8 @@
             android:id="@+id/retour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Retour" />
+            android:text="Retour"
+            android:textColor="@color/lightbeige" />
 
     </LinearLayout>
 

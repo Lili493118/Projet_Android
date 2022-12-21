@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Creation et affichage de la toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitleTextColor(getResources().getColor(color.color3));
+        myToolbar.setTitleTextColor(getResources().getColor(color.lightbeige));
         setSupportActionBar(myToolbar);
 
         //Creation du Fragment manager

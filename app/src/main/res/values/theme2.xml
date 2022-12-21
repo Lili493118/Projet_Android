@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.theme1" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.theme2" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/darkgreen</item>
-        <item name="colorPrimaryVariant">@color/lightgreen</item>
-        <item name="colorOnPrimary">@color/lightbeige</item>
+        <item name="colorPrimary">@color/violet</item>
+        <item name="colorPrimaryVariant">@color/darkpink</item>
+        <item name="colorOnPrimary">@color/lightpink</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/mediumbeige</item>
-        <item name="colorSecondaryVariant">@color/darkbeige</item>
+        <item name="colorSecondary">@color/lightblue</item>
+        <item name="colorSecondaryVariant">@color/darkblue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
