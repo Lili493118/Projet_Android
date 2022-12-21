@@ -5,11 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.projet_aoustin.R.color;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Creation et affichage de la toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitleTextColor(getResources().getColor(color.color3));
         setSupportActionBar(myToolbar);
 
         //Creation du Fragment manager
