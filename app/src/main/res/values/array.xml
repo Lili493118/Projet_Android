@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> <!-- Petite=1, Moyenne=5, Grande=20 -->
+    <array name="key">
+        <item>"Foret"</item>
+        <item>"Pastel"</item>
+        <item>"Classique"</item>
+    </array>
+    <array name="value">
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+    </array>
+</resources>

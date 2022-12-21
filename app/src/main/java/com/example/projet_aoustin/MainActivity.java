@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,9 +19,12 @@ import android.widget.Button;
 import com.example.projet_aoustin.R.color;
 
 public class MainActivity extends AppCompatActivity {
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        GetThemeFromSharedPreference();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creation et affichage de la toolbar
@@ -31,6 +37,30 @@ public class MainActivity extends AppCompatActivity {
         // Réalisation de la première transaction affichant le fragment recherche : initialisation
         FragmentTransaction maTransaction = monManager.beginTransaction();
         maTransaction.add(R.id.fragment_container, new Fragment_Recherche(),null).commit();
+
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                GetThemeFromSharedPreference();
+                recreate();
+            }
+        });
+
+    }
+
+    private void GetThemeFromSharedPreference() {
+        String theme_number = prefs.getString("theme","");
+        switch (theme_number){
+            case "1":
+                this.setTheme(R.style.Theme_theme1);
+                break;
+            case "2":
+                this.setTheme(R.style.Theme_theme2);
+                break;
+            case "3":
+                this.setTheme(R.style.Theme_theme3);
+                break;
+        }
 
     }
 
