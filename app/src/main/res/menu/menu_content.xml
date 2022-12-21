@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/fragR"
+        android:icon="@drawable/loupe"
         android:title="@string/fragment_recherche"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/fragF"
+    <item
+        android:id="@+id/fragF"
+        android:icon="@drawable/heart"
         android:title="@string/fragment_favoris"
-        app:showAsAction="ifRoom"/>
-    <item android:id="@+id/fragP"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/fragP"
+        android:icon="@drawable/settings"
         android:title="@string/fragment_preference"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom" />
 </menu>
