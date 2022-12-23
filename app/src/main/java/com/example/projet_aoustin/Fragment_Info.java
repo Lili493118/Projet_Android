@@ -34,6 +34,11 @@ public class Fragment_Info extends Fragment {
         this.image= image;
     }
 
+    public Fragment_Info() {
+        this.image = new Image();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,15 +88,15 @@ public class Fragment_Info extends Fragment {
 
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
 
-                //reviens sur la page précedente
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .remove(Fragment_Info.this)
-                        .commit();
-                getActivity().getSupportFragmentManager().popBackStack();
+
 
                 Intent intent = new Intent(wallpaperManager.getCropAndSetWallpaperIntent(image.getImageUri(getContext())));
                 startActivity(intent);
+                //reviens sur la page précedente
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container,new Fragment_Favoris()).addToBackStack("recherche")
+                        .commit();
 
             }
         });
