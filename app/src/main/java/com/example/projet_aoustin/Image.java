@@ -1,6 +1,11 @@
 package com.example.projet_aoustin;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+
+import java.io.ByteArrayOutputStream;
 
 public class Image {
     public String titre;
@@ -68,6 +73,15 @@ public class Image {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    public Uri getImageUri(Context inContext) {
+        Bitmap uriImage = this.bitmap;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        uriImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(),
+                uriImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public static class Builder{

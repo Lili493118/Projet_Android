@@ -2,8 +2,11 @@ package com.example.projet_aoustin;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.io.IOException;
 
 public class Fragment_Info extends Fragment {
 
@@ -68,6 +73,26 @@ public class Fragment_Info extends Fragment {
                     myDatabase.deleteData(image);
                     Toast.makeText(getContext(), "removed from favorite", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        Button setWallpaper = rootView.findViewById(R.id.wallpaperbutton);
+        setWallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
+
+                //reviens sur la page précedente
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(Fragment_Info.this)
+                        .commit();
+                getActivity().getSupportFragmentManager().popBackStack();
+
+                Intent intent = new Intent(wallpaperManager.getCropAndSetWallpaperIntent(image.getImageUri(getContext())));
+                startActivity(intent);
+
             }
         });
 

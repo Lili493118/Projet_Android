@@ -127,6 +127,12 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/wallpaperbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Définir comme fond d'écran" />
+
+        <Button
             android:id="@+id/retour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
