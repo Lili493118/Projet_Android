@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <CheckBoxPreference app:key="wifi"
-        app:title="Utiliser le wifi"
-        app:summary="Synchronise l'application via le wifi."
-        app:summaryOn="L'application se synchronise via le wifi."
-        app:summaryOff="L'application ne se synchronise pas."
+    <CheckBoxPreference app:key="telecharger"
+        app:title="Telecharger automatiquement les images en favoris"
+        app:summaryOn="Telechargement des images favorites"
+        app:summaryOff="Les images favorites ne se telecharge pas "
         />
     <ListPreference
         app:dialogTitle="Choisir le thème:"

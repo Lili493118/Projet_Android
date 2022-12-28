@@ -8,8 +8,12 @@ import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,8 @@ import android.widget.Button;
 
 import com.example.projet_aoustin.R.color;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         GetThemeFromSharedPreference();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Creation et affichage de la toolbar
@@ -38,11 +45,30 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction maTransaction = monManager.beginTransaction();
         maTransaction.add(R.id.fragment_container, new Fragment_Recherche(),null).commit();
 
+
+
         prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                GetThemeFromSharedPreference();
-                recreate();
+                switch (key){
+                    case "theme":
+                        GetThemeFromSharedPreference();
+                        recreate();
+                        break;
+                    case "telecharger":
+                        if((boolean) sharedPreferences.getAll().get(key)){
+                            Log.d("key",sharedPreferences.getAll().get(key).toString());
+                            if (Build.VERSION.SDK_INT >= 30){
+                                if (!Environment.isExternalStorageManager()){
+                                    Intent getpermission = new Intent();
+                                    getpermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                                    startActivity(getpermission);
+                                }
+                            }
+                        }
+                        break;
+                }
+
             }
         });
 

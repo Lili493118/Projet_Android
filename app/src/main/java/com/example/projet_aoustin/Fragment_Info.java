@@ -3,9 +3,12 @@ package com.example.projet_aoustin;
 import static android.content.Context.BIND_AUTO_CREATE;
 
 import android.app.WallpaperManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,13 +25,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Fragment_Info extends Fragment {
 
     private Image image;
     public View rootView;
+    public SharedPreferences prefs;
 
     public Fragment_Info(Image image){
         this.image= image;
@@ -44,6 +52,8 @@ public class Fragment_Info extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_info, container, false);
         Log.d("Fragment Info","onCreateView");
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         //remplissage du switch
         Switch addFavorite = (Switch) rootView.findViewById(R.id.favorite);
@@ -71,6 +81,10 @@ public class Fragment_Info extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if( isChecked){
                     myDatabase.insertData(image);
+                    if((boolean) prefs.getAll().get("telecharger")){
+                        saveimage(getContext(),image.getBitmap(), image.getTitre());
+                        Log.d("enrengistrement","en cours");
+                    }
                     Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -87,9 +101,6 @@ public class Fragment_Info extends Fragment {
             public void onClick(View v) {
 
                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
-
-
-
                 Intent intent = new Intent(wallpaperManager.getCropAndSetWallpaperIntent(image.getImageUri(getContext())));
                 startActivity(intent);
                 //reviens sur la page précedente
@@ -116,5 +127,30 @@ public class Fragment_Info extends Fragment {
         });
 
         return rootView;
+    }
+    public File saveimage(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
+        //create a file to write bitmap data
+        File file = null;
+
+        try {
+            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave+".png");
+            file.createNewFile();
+            Log.d("path", file.toString());
+
+//Convert bitmap to byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
+            byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            return file;
+        }catch (Exception e){
+            e.printStackTrace();
+            return file; // it will return null
+        }
     }
 }

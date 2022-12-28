@@ -3,12 +3,17 @@ package com.example.projet_aoustin;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import android.app.Service;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -19,6 +24,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,10 +45,10 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Service_Image extends Service {
-    private static String TAG="grenouille";
+    private static String TAG = "grenouille";
     private Listener_Service_Image listener_service_image;
     private final IBinder binder = new MonBinder();
-    public String test="debut";
+    public String test = "debut";
 
     public class MonBinder extends Binder {
         Service_Image getService() {
@@ -50,23 +59,23 @@ public class Service_Image extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG,"OnCreate");
+        Log.d(TAG, "OnCreate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG,"onStartCommand");
-        this.test="fin";
+        Log.d(TAG, "onStartCommand");
+        this.test = "fin";
         Bundle getExtra = intent.getExtras();
         String keyword = new String(getExtra.getString("recherche"));
 
         new Thread(new Runnable() {
             public void run() {
-                int progress=0;
+                int progress = 0;
 
                 URL url = null;
                 try {
-                    url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags="+keyword+"&format=json");
+                    url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=" + keyword + "&format=json");
                     StringBuilder builder = new StringBuilder();
 
                     try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream(), UTF_8))) {
@@ -81,12 +90,12 @@ public class Service_Image extends Service {
                         //Image image = new Image.Builder().auteur("test").build();
                         ArrayList<Image> ImageList = new ArrayList<>();
 
-                        for (int i=0; i<jsonObject.getJSONArray("items").length(); i++){
-                            Log.d("reponse",jsonArray.getJSONObject(i).get("title").toString());
+                        for (int i = 0; i < jsonObject.getJSONArray("items").length(); i++) {
+                            Log.d("reponse", jsonArray.getJSONObject(i).get("title").toString());
                             Bitmap bitmap = null;
                             listener_service_image.progress(progress++);
                             try {
-                                bitmap = BitmapFactory.decodeStream((InputStream)new URL(
+                                bitmap = BitmapFactory.decodeStream((InputStream) new URL(
                                         jsonArray.getJSONObject(i).getJSONObject("media").get("m").toString()).getContent());
 
                                 ImageList.add(new Image.Builder()
@@ -118,8 +127,6 @@ public class Service_Image extends Service {
     }
 
 
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -129,4 +136,6 @@ public class Service_Image extends Service {
     public void setMonListener(Listener_Service_Image monListener) {
         this.listener_service_image = monListener;
     }
+
+
 }
