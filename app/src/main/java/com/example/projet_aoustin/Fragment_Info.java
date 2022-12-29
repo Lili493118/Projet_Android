@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -84,6 +86,9 @@ public class Fragment_Info extends Fragment {
                     if((boolean) prefs.getAll().get("telecharger")){
                         saveimage(getContext(),image.getBitmap(), image.getTitre());
                         Log.d("enrengistrement","en cours");
+                        //envoi a la galerie
+                        //getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+                               // Uri.parse("file://" + Environment.getExternalStorageDirectory())));
                     }
                     Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
                 }
@@ -128,29 +133,25 @@ public class Fragment_Info extends Fragment {
 
         return rootView;
     }
-    public File saveimage(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
-        //create a file to write bitmap data
-        File file = null;
-
+    public void saveimage(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/saved_images");
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        String fname = "Image-"+ fileNameToSave +".jpg";
+        File file = new File (myDir, fname);
+        if (file.exists ())
+            file.delete ();
         try {
-            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave+".png");
-            file.createNewFile();
-            Log.d("path", file.toString());
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            MediaScannerConnection.scanFile(getContext(), new String[]{file.toString()}, new String[]{file.getName()}, null);
 
-//Convert bitmap to byte array
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
-            byte[] bitmapdata = bos.toByteArray();
-
-//write the bytes in file
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-            return file;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return file; // it will return null
         }
     }
 }
