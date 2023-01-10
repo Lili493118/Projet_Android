@@ -6,26 +6,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
 import android.widget.Toast;
 
 import com.example.projet_aoustin.R.color;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
+
 
 /**
  * Activité principale du projet
@@ -33,7 +29,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     /** Préference partagée de l'application  */
     SharedPreferences prefs;
-    /** String contenant le nom du dossier où sont stokées les images en cas de téléchargement */
+    /** Chaine de charactère contenant le nom du dossier où sont stokées les images en cas d'enrengistrement */
     public String dossierDeStockage;
 
     /**
@@ -43,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
      *     <li>Assigne des valeurs aux attributs définit précédemment</li>
      *     <li></li>
      * </ul>
-     *
-     * @param savedInstanceState
+     * @param savedInstanceState récupere une instance sauvegardée de l'activité
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         dossierDeStockage = new String(prefs.getString("emplacement",""));
 
-        /** Définition du Themes à appliquer à partir des préférences */
+        /** Définition du themes à appliquer à partir des préférences */
         GetThemeFromSharedPreference();
 
         super.onCreate(savedInstanceState);
@@ -82,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
                     case "theme":
                         /**
                          * Change le thème
-                         * Alerte l'utlisateur d'un redémrrage sera peut-etre necessaire
-                         * Re-créaction de l'activité afin de changer le théme */
+                         * Alerte l'utlisateur qu'un redémrrage sera peut-etre necessaire
+                         * Re-créaction de l'activité afin de changer le thème */
                         GetThemeFromSharedPreference();
-                        Toast.makeText(getApplicationContext(), "Si le theme ne change pas, redémarrer l'application", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Si le thème ne change pas, redémarrer l'application", Toast.LENGTH_LONG).show();
                         recreate();
                         break;
                     case "telecharger":
                         /** Si l'enrengistrement devient autorisé lors du changement */
                         /**
                          * Alerte l'utlisateur qu'une permission supplémentaire (MANAGE_ALL_FILES) est requise
-                         * Commence une nouvelle activité permettant à l'utlisateur d'autorisé l'enrengistrement des images
+                         * Commence une nouvelle activité permettant à l'utlisateur d'autoriser l'enrengistrement des images
                          * */
                         if((boolean) sharedPreferences.getAll().get(key)){
                             if (Build.VERSION.SDK_INT >= 30){
@@ -103,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(getpermission);
                                 }
                             }
-                            /** Récupération et enrengistrement des images se trouvant déja en favorites */
+                            /** Récupération et enrengistrement des images se trouvant déja en favorites (dans la base de données) */
                             MyDatabase myDatabase = new MyDatabase(getApplicationContext());
                             ArrayList<Image> ImageList = myDatabase.readData(true);
                             for (Image i : ImageList){
@@ -114,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     case "emplacement":
                         /** Renommage du dossier comprenant les images téléchargées
                          * dossierDeStockage = ancier nom du dossier
-                         * clé emplacement des préférences = nouveau nom du dossier
+                         * clé "emplacement" des préférences = nouveau nom du dossier
                          * */
                         String root = Environment.getExternalStorageDirectory().toString();
                         File myDir = new File(root + dossierDeStockage );
@@ -122,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                             myDir.mkdirs();
                         }
                         myDir.renameTo(new File(root + sharedPreferences.getString("emplacement","")));
-                        /** Actialisation de la variable aprés le changement */
+                        /** Actualisation de la variable aprés le changement */
                         dossierDeStockage = sharedPreferences.getString("emplacement","");
                         break;
                 }
