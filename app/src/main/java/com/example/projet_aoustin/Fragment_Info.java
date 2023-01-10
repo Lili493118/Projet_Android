@@ -97,6 +97,11 @@ public class Fragment_Info extends Fragment {
         });
 
         Button setWallpaper = rootView.findViewById(R.id.wallpaperbutton);
+        if((boolean) prefs.getAll().get("fond_d_ecran")){
+            setWallpaper.setVisibility(View.VISIBLE);
+        }else{
+            setWallpaper.setVisibility(View.GONE);
+        }
         setWallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

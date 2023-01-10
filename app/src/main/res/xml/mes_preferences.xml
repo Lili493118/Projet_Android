@@ -10,7 +10,7 @@
         app:key="theme"
         app:title="Thème"></ListPreference>
     <CheckBoxPreference
-        app:defaultValue="false"
+        app:defaultValue="true"
         app:icon="@drawable/folder"
         app:key="telecharger"
         app:summaryOff="Les images favorites ne se telecharge pas "
@@ -35,4 +35,12 @@
         app:summaryOn="Les favoris sont trié par date d'ajout croissante"
         app:switchTextOff="Decroissant"
         app:switchTextOn="Croissant" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="fond_d_ecran"
+        android:title="Fond d'écran"
+        app:icon="@drawable/picture"
+        app:summary="Possibilité de mettre les images en fond d'écran"
+        app:summaryOff="Le bouton pour mettre les images en fond d'ecran est caché "
+        app:summaryOn="Le bouton pour mettre les images en fond d'ecan est visible" />
 </PreferenceScreen>
