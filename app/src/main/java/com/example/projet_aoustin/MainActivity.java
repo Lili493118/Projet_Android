@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (key){
                     case "theme":
                         GetThemeFromSharedPreference();
+                        Toast.makeText(getApplicationContext(), "Si le theme ne change pas, redémarrer l'application", Toast.LENGTH_LONG).show();
                         recreate();
-                        Toast.makeText(getApplicationContext(), "Si le theme ne change pas, svp redémarrer l'application", Toast.LENGTH_LONG).show();
                         break;
                     case "telecharger":
                         if((boolean) sharedPreferences.getAll().get(key)){
