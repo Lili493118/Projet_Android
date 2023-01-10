@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <CheckBoxPreference app:key="telecharger"
-        app:title="Telecharger automatiquement les images en favoris"
-        app:summaryOn="Telechargement des images favorites"
+    <CheckBoxPreference
+        app:defaultValue="false"
+        app:key="telecharger"
         app:summaryOff="Les images favorites ne se telecharge pas "
-        />
+        app:summaryOn="Telechargement des images favorites"
+        app:title="Telecharger automatiquement les images en favoris" />
     <ListPreference
         app:dialogTitle="Choisir le thème:"
         app:entries="@array/key"

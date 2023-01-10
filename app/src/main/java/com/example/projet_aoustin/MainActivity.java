@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.projet_aoustin.R.color;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     case "theme":
                         GetThemeFromSharedPreference();
                         recreate();
+                        Toast.makeText(getApplicationContext(), "Si le theme ne change pas, svp redémarrer l'application", Toast.LENGTH_LONG).show();
                         break;
                     case "telecharger":
                         if((boolean) sharedPreferences.getAll().get(key)){
