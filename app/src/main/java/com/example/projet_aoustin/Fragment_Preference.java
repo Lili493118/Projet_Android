@@ -1,21 +1,20 @@
 package com.example.projet_aoustin;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+/**
+ * Fragment de préférence
+ * Affiche et gère les préférences partagées
+ */
 public class Fragment_Preference extends PreferenceFragmentCompat {
 
-    public Fragment_Preference() {
-    }
-
+    /**
+     * Méthode qui se réalise lors de la création de ce fragment
+     * Met en place les préférences suivant les indications contenues dans le fichier mes_preferences
+     * @param savedInstanceState Bundle
+     * @param rootKey String
+     */
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.mes_preferences, rootKey);
