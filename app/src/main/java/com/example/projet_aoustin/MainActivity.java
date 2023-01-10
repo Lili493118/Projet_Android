@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /* Assignation des valeurs aux attributs
-         * Definition des préférérence partagées à travers le Preference Manager
-         * Définition de l'emplacement de stockage des images à partir des préférences
+         * Récupération des préférérence partagées à travers le Preference Manager
+         * Récupération de l'emplacement de stockage des images à partir des préférences
          * */
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         dossierDeStockage = prefs.getString("emplacement","");
