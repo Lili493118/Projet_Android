@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
      * Cette méthode :
      * <ul>
      *     <li>Assigne des valeurs aux attributs définit précédemment</li>
-     *     <li></li>
+     *     <li>Défini le thème</li>
+     *     <li>Configure et Affiche la toolbar</li>
+     *     <li>Initilialise la première transaction</li>
+     *     <li>Définit les actions à réaliser lors d'un changement de préférence</li>
      * </ul>
      * @param savedInstanceState récupere une instance sauvegardée de l'activité
      */
