@@ -1,5 +1,6 @@
 package com.example.projet_aoustin;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fragment_Favoris extends Fragment {
+    public SharedPreferences prefs;
+
     public Fragment_Favoris(){
     }
 
@@ -23,9 +27,11 @@ public class Fragment_Favoris extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_favoris_layout, container, false);
         Log.d("Fragment Favoris","onCreateView");
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         MyDatabase myDatabase = new MyDatabase(getContext());
 
-        ArrayList<Image> ImageList = myDatabase.readData();
+        ArrayList<Image> ImageList = myDatabase.readData((boolean) prefs.getAll().get("ordre_tri"));
 
         ListView listView = rootView.findViewById(R.id.listViewimagefavoris);
         AdaptateurListImage adaptateurListImage = new AdaptateurListImage(listView.getContext(),ImageList);

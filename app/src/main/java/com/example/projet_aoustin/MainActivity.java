@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             //telechargement des images déja en favorite
                             MyDatabase myDatabase = new MyDatabase(getApplicationContext());
-                            ArrayList<Image> ImageList = myDatabase.readData();
+                            ArrayList<Image> ImageList = myDatabase.readData(true);
                             for (Image i : ImageList){
                                 i.saveimage(getApplicationContext(),prefs.getString("emplacement",""));
                             }

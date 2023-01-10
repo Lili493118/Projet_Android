@@ -87,9 +87,15 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public ArrayList<Image> readData(){
+    public ArrayList<Image> readData(boolean order_tri){
         ArrayList<Image> imageList = new ArrayList<>();
-        String select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" DESC");
+        String select = null;
+        if(order_tri){
+            select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" ASC");
+        }
+        else {
+            select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" DESC");
+        }
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(select,null);
         if(cursor.getCount() > 0 ){

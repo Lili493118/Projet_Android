@@ -25,4 +25,14 @@
         app:dialogIcon="@drawable/folder"
         app:icon="@drawable/folder"
         app:summary="Dossier contenant les images téléchargées" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ordre_tri"
+        android:title="Tri des Favoris "
+        app:icon="@drawable/sort"
+        app:summary="Ordre d'affichage des favoris"
+        app:summaryOff="Les favoris sont trié par date d'ajout décroissante"
+        app:summaryOn="Les favoris sont trié par date d'ajout croissante"
+        app:switchTextOff="Decroissant"
+        app:switchTextOn="Croissant" />
 </PreferenceScreen>
