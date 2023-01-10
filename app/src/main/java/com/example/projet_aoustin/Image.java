@@ -2,10 +2,14 @@ package com.example.projet_aoustin;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class Image {
     public String titre;
@@ -120,6 +124,28 @@ public class Image {
 
         public Image build(){
             return image;
+        }
+    }
+
+    public void saveimage(Context context,String directoryName) { // File name like "image.png"
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + directoryName);
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        String fname = "Image-"+ this.titre +".jpg";
+        File file = new File (myDir, fname);
+        if (file.exists ())
+            file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            this.bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+            MediaScannerConnection.scanFile(context, new String[]{file.toString()}, new String[]{file.getName()}, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

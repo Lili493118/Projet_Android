@@ -81,14 +81,11 @@ public class Fragment_Info extends Fragment {
         addFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if( isChecked){
+                if(isChecked){
                     myDatabase.insertData(image);
                     if((boolean) prefs.getAll().get("telecharger")){
-                        saveimage(getContext(),image.getBitmap(), image.getTitre());
+                        image.saveimage(getContext(),"/Projet");
                         Log.d("enrengistrement","en cours");
-                        //envoi a la galerie
-                        //getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
-                               // Uri.parse("file://" + Environment.getExternalStorageDirectory())));
                     }
                     Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();
                 }
@@ -133,25 +130,5 @@ public class Fragment_Info extends Fragment {
 
         return rootView;
     }
-    public void saveimage(Context context, Bitmap bitmap, String fileNameToSave) { // File name like "image.png"
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
-        if (!myDir.exists()) {
-            myDir.mkdirs();
-        }
-        String fname = "Image-"+ fileNameToSave +".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ())
-            file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-            MediaScannerConnection.scanFile(getContext(), new String[]{file.toString()}, new String[]{file.getName()}, null);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

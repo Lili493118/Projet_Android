@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.projet_aoustin.R.color;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,11 +63,20 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("key",sharedPreferences.getAll().get(key).toString());
                             if (Build.VERSION.SDK_INT >= 30){
                                 if (!Environment.isExternalStorageManager()){
+                                    Toast.makeText(getApplicationContext(), "Une permission est requise pour cette fonctionalitée", Toast.LENGTH_LONG).show();
                                     Intent getpermission = new Intent();
                                     getpermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                                     startActivity(getpermission);
                                 }
                             }
+                            //telechargement des images déja en favorite
+                            MyDatabase myDatabase = new MyDatabase(getApplicationContext());
+                            ArrayList<Image> ImageList = myDatabase.readData();
+                            for (Image i : ImageList){
+                                i.saveimage(getApplicationContext(),"/Projet");
+                            }
+
+
                         }
                         break;
                 }
