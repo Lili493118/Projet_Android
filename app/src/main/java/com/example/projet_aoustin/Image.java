@@ -2,6 +2,7 @@ package com.example.projet_aoustin;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -122,6 +123,11 @@ public class Image {
             return this;
         }
 
+        public Builder bitmap(byte[] img){
+            image.setBitmap(image.getImage(img));
+            return this;
+        }
+
         public Image build(){
             return image;
         }
@@ -147,5 +153,17 @@ public class Image {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // convert from bitmap to byte array
+    public byte[] getBytes() {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        this.bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }

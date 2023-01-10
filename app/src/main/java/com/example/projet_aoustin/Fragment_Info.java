@@ -46,7 +46,6 @@ public class Fragment_Info extends Fragment {
 
     public Fragment_Info() {
         this.image = new Image();
-
     }
 
     @Nullable

@@ -64,7 +64,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         values.put(TITRE,image.getTitre());
         values.put(AUTEUR,image.getAuteur());
         values.put(DATE,image.getDate());
-        values.put(BITMAP,getBytes(image.getBitmap()));
+        values.put(BITMAP,image.getBytes());
 
         db.insertOrThrow(DATABASE_TABLE_NAME,null,values);
         db.setTransactionSuccessful();
@@ -99,24 +99,14 @@ public class MyDatabase extends SQLiteOpenHelper {
                         .titre(cursor.getString(cursor.getColumnIndex(TITRE)))
                         .auteur(cursor.getString(cursor.getColumnIndex(AUTEUR)))
                         .date(cursor.getString(cursor.getColumnIndex(DATE)))
-                        .bitmap(getImage(cursor.getBlob(cursor.getColumnIndex(BITMAP))))
+                        .bitmap(cursor.getBlob(cursor.getColumnIndex(BITMAP)))
                         .build();
                 imageList.add(image);
             }while (cursor.moveToNext());
         }
         return imageList;
     }
-    // convert from bitmap to byte array
-    private static byte[] getBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-        return stream.toByteArray();
-    }
 
-    // convert from byte array to bitmap
-    private static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
-    }
 
 
 }
