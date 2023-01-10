@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:dialogIcon="@drawable/palette"
+        app:dialogTitle="Choisir le thème:"
+        app:entries="@array/key"
+        app:entryValues="@array/value"
+        app:icon="@drawable/palette"
+        app:key="theme"
+        app:title="Thème"></ListPreference>
     <CheckBoxPreference
         app:defaultValue="false"
+        app:icon="@drawable/folder"
         app:key="telecharger"
         app:summaryOff="Les images favorites ne se telecharge pas "
         app:summaryOn="Telechargement des images favorites"
         app:title="Telecharger automatiquement les images en favoris" />
-    <ListPreference
-        app:dialogTitle="Choisir le thème:"
-        app:entries="@array/key"
-        app:entryValues="@array/value"
-        app:key="theme"
-        app:title="Thème"></ListPreference>
+    <EditTextPreference
+        android:defaultValue="/Projet"
+        android:key="emplacement"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Emplacement des images"
+        app:dialogIcon="@drawable/folder"
+        app:icon="@drawable/folder"
+        app:summary="Dossier contenant les images téléchargées" />
 </PreferenceScreen>

@@ -84,7 +84,7 @@ public class Fragment_Info extends Fragment {
                 if(isChecked){
                     myDatabase.insertData(image);
                     if((boolean) prefs.getAll().get("telecharger")){
-                        image.saveimage(getContext(),"/Projet");
+                        image.saveimage(getContext(),prefs.getString("emplacement",""));
                         Log.d("enrengistrement","en cours");
                     }
                     Toast.makeText(getContext(), "added to favorite", Toast.LENGTH_SHORT).show();

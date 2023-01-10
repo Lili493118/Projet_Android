@@ -23,16 +23,20 @@ import android.widget.Toast;
 
 import com.example.projet_aoustin.R.color;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
+    public String dossierDeStockage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         GetThemeFromSharedPreference();
+        dossierDeStockage = new String(prefs.getString("emplacement",""));
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -73,17 +77,23 @@ public class MainActivity extends AppCompatActivity {
                             MyDatabase myDatabase = new MyDatabase(getApplicationContext());
                             ArrayList<Image> ImageList = myDatabase.readData();
                             for (Image i : ImageList){
-                                i.saveimage(getApplicationContext(),"/Projet");
+                                i.saveimage(getApplicationContext(),prefs.getString("emplacement",""));
                             }
-
-
                         }
                         break;
+                    case "emplacement":
+                        Log.d("recent","je rename");
+                        String root = Environment.getExternalStorageDirectory().toString();
+                        File myDir = new File(root + dossierDeStockage );
+                        if (!myDir.exists()) {
+                            myDir.mkdirs();
+                        }
+                        myDir.renameTo(new File(root + sharedPreferences.getString("emplacement","")));
+                        dossierDeStockage = sharedPreferences.getString("emplacement","");
+                        break;
                 }
-
             }
         });
-
     }
 
     private void GetThemeFromSharedPreference() {
