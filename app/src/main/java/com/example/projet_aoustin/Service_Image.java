@@ -103,6 +103,8 @@ public class Service_Image extends Service {
                                         .titre(jsonArray.getJSONObject(i).get("title").toString())
                                         .date(jsonArray.getJSONObject(i).get("date_taken").toString())
                                         .auteur(jsonArray.getJSONObject(i).get("author").toString())
+                                        .description(jsonArray.getJSONObject(i).get("description").toString())
+                                        .lien(jsonArray.getJSONObject(i).get("link").toString())
                                         .build()
                                 );
                             } catch (IOException e) {

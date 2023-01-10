@@ -26,6 +26,10 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String AUTEUR = "auteur";
     private static final String DATE = "date";
     private static final String BITMAP = "bitmap";
+    private static final String LIEN = "lien";
+    private static final String DESCRIPTION = "description";
+
+
 
 
     public MyDatabase(Context context){
@@ -38,6 +42,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                 ID + " INTEGER PRIMARY KEY," +
                 TITRE + " TEXT, " +
                 AUTEUR + " TEXT," +
+                LIEN + " TEXT," +
+                DESCRIPTION + " TEXT," +
                 DATE + " TEXT,"
                 + BITMAP + " BLOB);";
         db.execSQL(DATABASE_TABLE_CREATE);
@@ -65,6 +71,8 @@ public class MyDatabase extends SQLiteOpenHelper {
         values.put(AUTEUR,image.getAuteur());
         values.put(DATE,image.getDate());
         values.put(BITMAP,image.getBytes());
+        values.put(DESCRIPTION,image.getDescription());
+        values.put(LIEN,image.getLien());
 
         db.insertOrThrow(DATABASE_TABLE_NAME,null,values);
         db.setTransactionSuccessful();
@@ -106,6 +114,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                         .auteur(cursor.getString(cursor.getColumnIndex(AUTEUR)))
                         .date(cursor.getString(cursor.getColumnIndex(DATE)))
                         .bitmap(cursor.getBlob(cursor.getColumnIndex(BITMAP)))
+                        .lien(cursor.getString((cursor.getColumnIndex(LIEN))))
+                        .description(cursor.getString(cursor.getColumnIndex(DESCRIPTION)))
                         .build();
                 imageList.add(image);
             }while (cursor.moveToNext());

@@ -1,24 +1,17 @@
 package com.example.projet_aoustin;
 
-import static android.content.Context.BIND_AUTO_CREATE;
-
 import android.app.WallpaperManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.DisplayMetrics;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,11 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class Fragment_Info extends Fragment {
 
@@ -72,7 +60,12 @@ public class Fragment_Info extends Fragment {
         auteur.setText(image.getAuteur());
 
         TextView description = rootView.findViewById(R.id.description);
-        description.setText(image.getDescription());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            description.setText(Html.fromHtml(image.getDescription(),Html.FROM_HTML_MODE_COMPACT));
+        }
+
+        TextView lien = rootView.findViewById(R.id.lien);
+        lien.setText(image.getLien());
 
         TextView date = rootView.findViewById(R.id.date);
         date.setText(image.getDate());
@@ -118,17 +111,16 @@ public class Fragment_Info extends Fragment {
             }
         });
 
-        Button retour = rootView.findViewById(R.id.retour);
-        retour.setOnClickListener(new View.OnClickListener() {
+        Button goToFavorite = rootView.findViewById(R.id.GoToFavorite);
+        goToFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("close","closing");
                 //getActivity().onBackPressed();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .remove(Fragment_Info.this)
+                        .replace(R.id.fragment_container,new Fragment_Favoris())
                         .commit();
-                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

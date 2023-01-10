@@ -10,7 +10,7 @@
         app:key="theme"
         app:title="Thème"></ListPreference>
     <CheckBoxPreference
-        app:defaultValue="true"
+        app:defaultValue="false"
         app:icon="@drawable/folder"
         app:key="telecharger"
         app:summaryOff="Les images favorites ne se telecharge pas "
