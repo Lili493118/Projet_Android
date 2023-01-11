@@ -6,36 +6,47 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
-import android.util.Log;
 
-import androidx.annotation.Nullable;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Classe définissant une base de données SQLite
+ */
 public class MyDatabase extends SQLiteOpenHelper {
 
+    /** Version de la base de donnée*/
     public static final int DATABASE_VERSION=2;
+    /**Nom de la table d'image */
     private static final String DATABASE_TABLE_NAME="favorite_img";
+    /**Identifiant d'une entrée*/
     private static final String ID="id";
+    /** Titre d'une image */
     private static final String TITRE ="image";
+    /** Auteur d'une image */
     private static final String AUTEUR = "auteur";
+    /** Date de prise d'une image*/
     private static final String DATE = "date";
+    /**Image en format Bitmap*/
     private static final String BITMAP = "bitmap";
+    /** Lien de l'image */
     private static final String LIEN = "lien";
+    /** Description de l'image fourni par l'auteur */
     private static final String DESCRIPTION = "description";
 
 
-
-
+    /**
+     * Constructeur
+     * @param context Context de l'application
+     */
     public MyDatabase(Context context){
         super(context,DATABASE_TABLE_NAME,null,DATABASE_VERSION);
     }
 
+    /**
+     * Fonction exécutée à la création de la base de données
+     * Crée la table et ses champs
+     * @param db SQLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String DATABASE_TABLE_CREATE="CREATE TABLE "+ DATABASE_TABLE_NAME + " (" +
@@ -51,21 +62,19 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
-
-    public void onDestroy() {
-        SQLiteDatabase db = getReadableDatabase();
-        Log.i("MonLog", "Destroy des tables");
-        db.execSQL("DROP TABLE IF EXISTS favorite_img;");
-        onCreate(db);
-    }
-
+    /**
+     * Fonction permettant d'inserer une Image (objet) dans la base de données
+     * @param image Image à insérer
+     */
     public void insertData(Image image){
+        /*Récupération de la base de données */
         SQLiteDatabase db = getWritableDatabase();
+        /*Début de la transaction*/
         db.beginTransaction();
 
+        /*Remplissage de la ligne avec les valeurs de l'Image*/
         ContentValues values = new ContentValues();
         values.put(TITRE,image.getTitre());
         values.put(AUTEUR,image.getAuteur());
@@ -74,41 +83,71 @@ public class MyDatabase extends SQLiteOpenHelper {
         values.put(DESCRIPTION,image.getDescription());
         values.put(LIEN,image.getLien());
 
+        /*insertion dans la table de la base de données et fin de la transaction*/
         db.insertOrThrow(DATABASE_TABLE_NAME,null,values);
         db.setTransactionSuccessful();
         db.endTransaction();
     }
 
+    /**
+     * Methode permettant de supprimer une Image(object) de la base de données
+     * @param image Image à supprimer de la base de données
+     */
     public  void deleteData(Image image){
+        /*Récupération de la base de données */
         SQLiteDatabase db = getWritableDatabase();
+        /*Début de la transaction*/
         db.beginTransaction();
+
+        /*Suppression de l'Image*/
         db.delete(DATABASE_TABLE_NAME, TITRE+"=? and "+AUTEUR+"=? and "+DATE+"=?", new String[]{image.getTitre(),image.getAuteur(),image.getDate()});
+        /* fin de transaction */
         db.setTransactionSuccessful();
         db.endTransaction();
     }
 
+    /**
+     * Méthode permettant de vérifier si une Image(obj) se trouve déja dans la base de données
+     * @param image Image que l'on veut tester
+     * @return true si l'Image est déja dans la base de données, faux sinon
+     */
     public boolean isInDatabase(Image image){
-        String select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME+" WHERE "+TITRE+"=? and "+AUTEUR+"=? and "+DATE+"=?");
+        /*Perparation de la requete recuperant de la ligne dans la base de données avec 3 parametres corrélés*/
+        String select = "SELECT * FROM "+ DATABASE_TABLE_NAME+" WHERE "+TITRE+"=? and "+AUTEUR+"=? and "+DATE+"=?";
+
+        /*Execution de la requete et comptage du nombre de résultat*/
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(select,new String[]{image.getTitre(),image.getAuteur(),image.getDate()});
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,new String[]{image.getTitre(),image.getAuteur(),image.getDate()});
         return cursor.getCount() >0;
     }
 
+    /**
+     * Méthode permettant de lire les Images dans la base de données dans un ordre défini
+     * @param order_tri indique l'ordre de tri des résultats
+     * @return  ArrayList<Image> liste d'Image se trouvant dans la base de données
+     */
     @SuppressLint("Range")
     public ArrayList<Image> readData(boolean order_tri){
+        /* Initilisation des variables*/
         ArrayList<Image> imageList = new ArrayList<>();
-        String select = null;
+        String select ;
+
+        /*Préparation des requetes de récupération du contenu de la base de données en fonction de l'ordre de tri*/
         if(order_tri){
-            select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" ASC");
+            select = "SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" ASC";
         }
         else {
-            select = new String("SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" DESC");
+            select = "SELECT * FROM "+ DATABASE_TABLE_NAME +" ORDER BY "+ID+" DESC";
         }
+
+        /*Execution de la requete*/
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(select,null);
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(select,null);
+        /*Action pour chaque éléments récuperés(chaque ligne de la base de données ici */
         if(cursor.getCount() > 0 ){
             cursor.moveToFirst();
             do {
+                /* Création d'une Image avec les champs récupérés de la base de données*/
                 Image image = new Image.Builder()
                         .titre(cursor.getString(cursor.getColumnIndex(TITRE)))
                         .auteur(cursor.getString(cursor.getColumnIndex(AUTEUR)))
@@ -117,12 +156,10 @@ public class MyDatabase extends SQLiteOpenHelper {
                         .lien(cursor.getString((cursor.getColumnIndex(LIEN))))
                         .description(cursor.getString(cursor.getColumnIndex(DESCRIPTION)))
                         .build();
+                /*Ajout de l'Image à la liste */
                 imageList.add(image);
             }while (cursor.moveToNext());
         }
         return imageList;
     }
-
-
-
 }
