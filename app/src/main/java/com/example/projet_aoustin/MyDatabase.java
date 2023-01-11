@@ -60,18 +60,11 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.execSQL(DATABASE_TABLE_CREATE);
     }
 
-    /**
-     * Méthode appelée en cas de mise à jour
-     * Supression de la base de données
-     * @param db SQLiteDatabase
-     * @param oldVersion oldVersion
-     * @param newVersion newVersion
-     */
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_NAME);
-        onCreate(db);
     }
+
 
     /**
      * Fonction permettant d'inserer une Image (objet) dans la base de données

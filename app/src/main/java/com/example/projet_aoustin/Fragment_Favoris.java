@@ -41,7 +41,7 @@ public class Fragment_Favoris extends Fragment {
 
         /*Contact et récupération des Images de la base de données*/
         MyDatabase myDatabase = new MyDatabase(requireContext());
-        ArrayList<Image> ImageList = myDatabase.readData((boolean) prefs.getAll().get("ordre_tri"));
+        ArrayList<Image> ImageList = myDatabase.readData((prefs.getBoolean("ordre_tri",true)));
 
         /*Récupération de la listView dans laquelle les Images seront affichées*/
         ListView listView = rootView.findViewById(R.id.listViewimagefavoris);

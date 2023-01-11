@@ -114,7 +114,7 @@ public class Fragment_Info extends Fragment {
                     myDatabase.insertData(image);
 
                     /*Si la préférence autorise l'enrengistrement des images */
-                    if((boolean) prefs.getAll().get("telecharger")){
+                    if(prefs.getBoolean("telecharger", false)){
                         //enrengistrement de l'image sur le téléphone à l'emplacement se trouvant dans les préférences
                         image.saveimage(getContext(),prefs.getString("emplacement",""));
                     }
@@ -132,7 +132,7 @@ public class Fragment_Info extends Fragment {
         Button setWallpaper = rootView.findViewById(R.id.wallpaperbutton);
 
         /* Rendre le bouton visible ou non visible selon les préférences */
-        if((boolean) prefs.getAll().get("fond_d_ecran")){
+        if( prefs.getBoolean("fond_d_ecran",true)){
             setWallpaper.setVisibility(View.VISIBLE);
         }else{
             setWallpaper.setVisibility(View.GONE);

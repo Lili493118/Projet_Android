@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
          * Récupération de l'emplacement de stockage des images à partir des préférences
          * */
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        
         dossierDeStockage = prefs.getString("emplacement","");
 
         /* Définition du themes à appliquer à partir des préférences */
