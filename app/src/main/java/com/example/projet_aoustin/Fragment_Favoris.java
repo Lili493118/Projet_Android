@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -50,14 +51,25 @@ public class Fragment_Favoris extends Fragment {
         listView.post(()-> listView.setAdapter(adaptateurListImage));
 
         /*Action lors de la selection d'un element de la liste listView*/
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            /*Récuperation de l'Image séléctionnée*/
-            Image selectedItem = (Image) parent.getItemAtPosition(position);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Ouvre le fragment favoris pour l'image sélectionnée
+             * @param parent AdapterView<?>
+             * @param view View
+             * @param position int
+             * @param id long
+             */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*Récuperation de l'Image séléctionnée*/
+                Image selectedItem = (Image) parent.getItemAtPosition(position);
 
-            /* Lancement du fragment info sur cette image*/
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).addToBackStack("favoris").commit();
+                /* Lancement du fragment info sur cette image*/
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container,new Fragment_Info(selectedItem)).addToBackStack("favoris").commit();
+            }
         });
+
         return rootView;
     }
 }

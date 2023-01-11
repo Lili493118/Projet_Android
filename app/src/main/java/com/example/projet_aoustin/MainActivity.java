@@ -76,60 +76,69 @@ public class MainActivity extends AppCompatActivity {
         maTransaction.add(R.id.fragment_container, new Fragment_Recherche(),null).commit();
 
         /* Définit les actions à réaliser au moment du changement des préférences */
-        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
-            switch (key){
-                case "theme":
-                    /*
-                     * Change le thème
-                     * Alerte l'utlisateur qu'un redémrrage sera peut-etre necessaire
-                     * Re-créaction de l'activité afin de changer le thème */
-                    GetThemeFromSharedPreference();
-                    Toast.makeText(getApplicationContext(), "Si le thème ne change pas, redémarrer l'application", Toast.LENGTH_LONG).show();
-                    recreate();
-                    break;
-                case "telecharger":
-                    /* Si l'enrengistrement devient autorisé lors du changement */
-                    /*
-                     * Alerte l'utlisateur qu'une permission supplémentaire (MANAGE_ALL_FILES) est requise
-                     * Commence une nouvelle activité permettant à l'utlisateur d'autoriser l'enrengistrement des images
-                     * */
-                    if((boolean) sharedPreferences.getAll().get(key)){
-                        if (Build.VERSION.SDK_INT >= 30){
-                            if (!Environment.isExternalStorageManager()){
-                                Toast.makeText(getApplicationContext(), "Une permission est requise pour cette fonctionalitée", Toast.LENGTH_LONG).show();
-                                Intent getpermission = new Intent();
-                                getpermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                                startActivity(getpermission);
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            /**
+             * Fonction appelée lors du changement d'une préférences
+             * Selon la préférence changée, effectue les actions adéquates
+             * @param sharedPreferences SharedPreferences
+             * @param key String clé permttant l'identification de la préférence modifiée qui a déclanché l'appel de la fonction
+             */
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                switch (key){
+                    case "theme":
+                        /*
+                         * Change le thème
+                         * Alerte l'utlisateur qu'un redémrrage sera peut-etre necessaire
+                         * Re-créaction de l'activité afin de changer le thème */
+                        GetThemeFromSharedPreference();
+                        Toast.makeText(getApplicationContext(), "Si le thème ne change pas, redémarrer l'application", Toast.LENGTH_LONG).show();
+                        recreate();
+                        break;
+                    case "telecharger":
+                        /* Si l'enrengistrement devient autorisé lors du changement */
+                        /*
+                         * Alerte l'utlisateur qu'une permission supplémentaire (MANAGE_ALL_FILES) est requise
+                         * Commence une nouvelle activité permettant à l'utlisateur d'autoriser l'enrengistrement des images
+                         * */
+                        if((boolean) sharedPreferences.getAll().get(key)){
+                            if (Build.VERSION.SDK_INT >= 30){
+                                if (!Environment.isExternalStorageManager()){
+                                    Toast.makeText(getApplicationContext(), "Une permission est requise pour cette fonctionalitée", Toast.LENGTH_LONG).show();
+                                    Intent getpermission = new Intent();
+                                    getpermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                                    startActivity(getpermission);
+                                }
+                            }
+                            /* Récupération et enrengistrement des images se trouvant déja en favorites (dans la base de données) */
+                            MyDatabase myDatabase = new MyDatabase(getApplicationContext());
+                            ArrayList<Image> ImageList = myDatabase.readData(true);
+                            for (Image i : ImageList){
+                                i.saveimage(getApplicationContext(),prefs.getString("emplacement",""));
                             }
                         }
-                        /* Récupération et enrengistrement des images se trouvant déja en favorites (dans la base de données) */
-                        MyDatabase myDatabase = new MyDatabase(getApplicationContext());
-                        ArrayList<Image> ImageList = myDatabase.readData(true);
-                        for (Image i : ImageList){
-                            i.saveimage(getApplicationContext(),prefs.getString("emplacement",""));
+                        break;
+                    case "emplacement":
+                        /* Renommage du dossier comprenant les images téléchargées
+                         * dossierDeStockage = ancier nom du dossier
+                         * clé "emplacement" des préférences = nouveau nom du dossier
+                         * */
+                        String root = Environment.getExternalStorageDirectory().toString();
+                        File myDir = new File(root + dossierDeStockage );
+                        if (!myDir.exists()) {
+                            if(!myDir.mkdirs()){
+                                Log.d(TAG,"Erreur lors de la création du dossier");
+                                break;
+                            }
                         }
-                    }
-                    break;
-                case "emplacement":
-                    /* Renommage du dossier comprenant les images téléchargées
-                     * dossierDeStockage = ancier nom du dossier
-                     * clé "emplacement" des préférences = nouveau nom du dossier
-                     * */
-                    String root = Environment.getExternalStorageDirectory().toString();
-                    File myDir = new File(root + dossierDeStockage );
-                    if (!myDir.exists()) {
-                        if(!myDir.mkdirs()){
-                            Log.d(TAG,"Erreur lors de la création du dossier");
+                        if(!myDir.renameTo(new File(root + sharedPreferences.getString("emplacement","")))){
+                            Log.d(TAG,"Erreur lors du changement de nom du dossier");
                             break;
                         }
-                    }
-                    if(!myDir.renameTo(new File(root + sharedPreferences.getString("emplacement","")))){
-                        Log.d(TAG,"Erreur lors du changement de nom du dossier");
+                        /* Actualisation de la variable aprés le changement */
+                        dossierDeStockage = sharedPreferences.getString("emplacement","");
                         break;
-                    }
-                    /* Actualisation de la variable aprés le changement */
-                    dossierDeStockage = sharedPreferences.getString("emplacement","");
-                    break;
+                }
             }
         });
     }
